@@ -1,0 +1,62 @@
+/* ============================================= */
+/* ОБЩИЙ СТИЛЬ ДЛЯ ВСЕХ СТРАНИЦ                 */
+/* ============================================= */
+
+body {
+    background-color: #2b2a33;
+}
+
+/* ==================== CARDS ==================== */
+.card {
+    border-radius: 15px;
+    background-color: #42414d;
+    color: #f0f0f0;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn {
+    border-radius: 6px;           /* сделаем кнопки чуть мягче */
+    font-weight: 700;
+}
+
+/* ==================== FORMS ==================== */
+.form-control {
+    background-color: #2b2a33;
+    color: #f0f0f0;
+    border: none;
+    padding: 0.75rem 1rem;
+}
+
+.form-text {
+    font-size: 0.875rem;
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+/* ==================== LABELS ==================== */
+.label-text {
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+/* ==================== TEXT ==================== */
+.text {
+    color: #f0f0f0;
+}
+
+/* ==================== BUTTON GROUPS ==================== */
+.btn-group {
+    gap: 10px;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .btn {
+        font-size: 1rem;
+    }
+    .col-md-6 {
+        flex: 1 1 100%;
+    }
+}

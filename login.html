@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="d-flex align-items-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card p-4">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="label-text">Логин / почта</label>
+                            <input type="email" id="login" class="form-control" required placeholder="user@example.com">
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <label class="label-text">Пароль</label>
+                            <input type="password" id="password" class="form-control" required placeholder="••••••••••••">
+                            <div id="passwordStrength" class="form-text mt-1"></div>
+                        </div>
+
+                        <div id="errorMessage" class="alert alert-danger d-none"></div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">Войти</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <small class="text">Нет аккаунта? </small>
+                        <a href="index.html" class="text-primary fw-semibold text-decoration-none">
+                            Зарегистрироваться
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('passwordStrength');
+
+        passwordInput.addEventListener('input', () => {
+            const val = passwordInput.value;
+            let text = '';
+            let color = '';
+
+            if (val.length < 12) {
+                text = '❌ Минимум 12 символов';
+                color = 'text-danger';
+            } else {
+                text = '✅ Пароль введён';
+                color = 'text-success';
+            }
+
+            strengthBar.innerHTML = text;
+            strengthBar.className = `form-text mt-1 ${color}`;
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const login = document.getElementById('login').value.trim();
+            const pass = document.getElementById('password').value;
+
+            if (pass.length < 6) {
+                document.getElementById('errorMessage').textContent = '❌ Пароль должен содержать минимум 12симвролов!';
+                document.getElementById('errorMessage').classList.remove('d-none');
+                return;
+            }
+            document.getElementById('errorMessage').classList.add('d-none');
+
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
