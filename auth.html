@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="logo">Авторизация</div>
+
+        <form id="authForm">
+            <!-- Логин / Почта -->
+            <div class="form-group">
+                <label for="login">Логин / Почта</label>
+                <input type="text" id="login" placeholder="Введите логин или почту" required>
+                <div class="error" id="loginError"></div>
+            </div>
+
+            <!-- Пароль -->
+            <div class="form-group">
+                <label for="password">Пароль (минимум 12 символов)</label>
+                <input type="password" id="password" placeholder="Введите пароль" required>
+                <div class="error" id="passwordError"></div>
+            </div>
+
+            <!-- Две кнопки с одним классом (как в регистрации) -->
+            <div class="buttons-group">
+                <button type="submit" class="button">Войти</button>
+                <button type="button" class="button">Зарегистрироваться</button>
+            </div>
+        </form>
+
+        <!-- Блок успеха -->
+        <div id="successBlock" class="success">
+            ✅ Авторизация прошла успешно!<br>
+            <small>Вы будете перенаправлены на главную страницу</small>
+        </div>
+    </div>
+
+    <script>
+        const loginInput = document.getElementById('login');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('loginError');
+        const passwordError = document.getElementById('passwordError');
+        const successBlock = document.getElementById('successBlock');
+        const form = document.getElementById('authForm');
+
+        // Проверка логина (простая: не пустой)
+        loginInput.addEventListener('input', () => {
+            if (loginInput.value.trim() === '') {
+                loginError.textContent = 'Поле не может быть пустым';
+                loginError.classList.add('show');
+            } else {
+                loginError.classList.remove('show');
+            }
+        });
+
+        // Проверка пароля (регламент)
+        function validatePassword(pass) {
+            if (pass.length < 12) {
+                passwordError.textContent = 'Пароль должен содержать минимум 12 символов';
+                return false;
+            }
+            if (!/[A-Z]/.test(pass)) {
+                passwordError.textContent = 'Пароль должен содержать хотя бы одну заглавную букву';
+                return false;
+            }
+            if (!/[0-9]/.test(pass)) {
+                passwordError.textContent = 'Пароль должен содержать хотя бы одну цифру';
+                return false;
+            }
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass)) {
+                passwordError.textContent = 'Пароль должен содержать хотя бы один специальный символ (!@#$%^&*()_+-=[]{};\':"\\|,.<>/?)';
+                return false;
+            }
+            return true;
+        }
+
+        passwordInput.addEventListener('input', () => {
+            if (validatePassword(passwordInput.value)) {
+                passwordError.classList.remove('show');
+            } else {
+                passwordError.classList.add('show');
+            }
+        });
+
+        // Обработка отправки формы
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const isPasswordValid = validatePassword(passwordInput.value);
+
+            // Показываем ошибки, если есть
+            if (!isPasswordValid) passwordError.classList.add('show');
+
+            // Если всё ок
+            if (isPasswordValid) {
+                // Показываем блок успеха
+                successBlock.style.display = 'block';
+
+                // Переход на локальный файл home.html
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1500);
+            }
+        });
+
+        // Кнопка «Нет аккаунта? Зарегистрироваться» — переход на регистрацию
+        document.querySelector('.buttons-group .button:last-child').addEventListener('click', () => {
+            window.location.href = 'register.html';
+        });
+    </script>
+</body>
+</html>
