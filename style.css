@@ -1,62 +1,127 @@
-/* ============================================= */
-/* ОБЩИЙ СТИЛЬ ДЛЯ ВСЕХ СТРАНИЦ                 */
-/* ============================================= */
+:root {
+    --bg: #2b2a33;
+    --text: #f0f0f0;
+    --input-bg: #42414d;
+    --button: #5865f2;
+    --button-hover: #5865f2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #2b2a33;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-/* ==================== CARDS ==================== */
-.card {
-    border-radius: 15px;
-    background-color: #42414d;
-    color: #f0f0f0;
+.form-container {
+    width: 100%;
+    max-width: 420px;
+    background: var(--input-bg);
+    padding: 50px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* ==================== BUTTONS ==================== */
-.btn {
-    border-radius: 6px;           /* сделаем кнопки чуть мягче */
-    font-weight: 700;
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 800;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+    letter-spacing: -1px;
 }
 
-/* ==================== FORMS ==================== */
-.form-control {
-    background-color: #2b2a33;
-    color: #f0f0f0;
-    border: none;
-    padding: 0.75rem 1rem;
+.form-group {
+    margin-bottom: 25px;
 }
 
-.form-text {
-    font-size: 0.875rem;
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
 }
 
-.alert {
+input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 2px solid #42414d;
     border-radius: 8px;
+    color: var(--text);
+    font-size: 16px;
+    text-align: center;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+    font-weight: 400;
+    transition: border 0.3s;
 }
 
-/* ==================== LABELS ==================== */
-.label-text {
-    color: #f0f0f0;
-    font-weight: 700;
+input:focus {
+    outline: none;
+    border-color: var(--button);
 }
 
-/* ==================== TEXT ==================== */
-.text {
-    color: #f0f0f0;
+.error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+    font-weight: 400;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
 }
 
-/* ==================== BUTTON GROUPS ==================== */
-.btn-group {
-    gap: 10px;
+.error.show {
+    display: block;
 }
 
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 768px) {
-    .btn {
-        font-size: 1rem;
-    }
-    .col-md-6 {
-        flex: 1 1 100%;
-    }
+.buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;          /* ← небольшой отступ между кнопками */
+    width: 100%;
+}
+
+.button {
+    width: 100%;
+    padding: 14px;
+    background: var(--button);
+    color: var(--text);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+}
+
+.button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+}
+
+.success {
+    background-color: #2a3d2a;
+    color: #a0f0a0;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: none;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 400;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
 }
