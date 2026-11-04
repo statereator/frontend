@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню форм</title>
+    <link rel="stylesheet" href="style_dark.css" id="themeStylesheet">
+    <script>
+        // Apply saved theme before the page renders (prevents a flash of the wrong theme)
+        (function () {
+            var theme = 'dark';
+            try { theme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+            if (theme === 'light') {
+                document.getElementById('themeStylesheet').href = 'style_light.css';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <button type="button" id="themeToggle" class="theme-toggle">☀️ Светлая</button>
+
+    <div class="form-container">
+        <div class="logo">Меню форм</div>
+
+        <div class="buttons-group">
+            <button type="button" class="button" id="okudButton">ОКУД 0504230</button>
+            <button type="button" class="button" id="logoutButton">Выйти</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('okudButton').addEventListener('click', () => {
+            window.location.href = 'OKUD_0504230.html';
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            window.location.href = 'auth.html';
+        });
+
+        // ===== Theme switch =====
+        const themeLink = document.getElementById('themeStylesheet');
+        const themeToggle = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            themeLink.href = theme === 'light' ? 'style_light.css' : 'style_dark.css';
+            themeToggle.textContent = theme === 'light' ? '🌙 Тёмная' : '☀️ Светлая';
+            try { localStorage.setItem('theme', theme); } catch (e) {}
+        }
+
+        let currentTheme = 'dark';
+        try { currentTheme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+        applyTheme(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
+        });
+    </script>
+</body>
+</html>

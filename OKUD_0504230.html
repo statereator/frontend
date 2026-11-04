@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ОКУД 0504230</title>
+<link rel="stylesheet" href="style_dark.css" id="themeStylesheet">
+<script>
+    (function () {
+        var theme = 'dark';
+        try { theme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+        if (theme === 'light') {
+            document.getElementById('themeStylesheet').href = 'style_light.css';
+        }
+    })();
+</script>
+<style>
+    body { align-items: flex-start; padding: 90px 20px 40px; }
+    .page-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--input-bg);
+        padding: 30px 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    .page-title {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+        font-weight: 800;
+        font-family: "Relovution Gothic Family RUS", sans-serif;
+    }
+    .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    .toolbar .button {
+        width: auto;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+    .btn-danger { background: #c0392b; }
+    .btn-danger:hover { background: #a83224; box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4); }
+    #printBtn { margin-left: auto; }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Relovution Gothic Family RUS", sans-serif;
+        font-size: 14px;
+    }
+    th, td {
+        border: 1px solid var(--input-border);
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    th {
+        background: var(--bg);
+        font-weight: 800;
+        font-size: 13px;
+    }
+    td input, td select {
+        width: 100%;
+        min-width: 90px;
+        padding: 8px;
+        background: var(--bg);
+        border: 1px solid var(--input-border);
+        border-radius: 6px;
+        color: var(--text);
+        font-size: 14px;
+        text-align: center;
+        font-family: inherit;
+    }
+    td input:focus, td select:focus {
+        outline: none;
+        border-color: var(--button);
+    }
+    td.fio-cell input, td.name-cell input { text-align: left; }
+    td input.invalid {
+        border-color: var(--error) !important;
+        background: rgba(255, 107, 107, 0.15);
+    }
+    .row-num { font-weight: 800; width: 40px; }
+    .row-del-cell { width: 40px; }
+    .row-del {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: none;
+        border-radius: 6px;
+        background: var(--error);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .row-del:hover { opacity: 0.85; }
+    .add-row-wrap { margin-top: 18px; text-align: center; }
+    .add-row-wrap .button { width: auto; padding: 10px 24px; }
+    .empty-msg {
+        text-align: center;
+        padding: 20px;
+        opacity: 0.7;
+        font-family: "Relovution Gothic Family RUS", sans-serif;
+    }
+    #importInput { display: none; }
+
+    #printTable { display: none; }
+
+    @media print {
+        .theme-toggle, .toolbar, .add-row-wrap, #dataTable { display: none !important; }
+        body { padding: 0; background: #fff; color: #000; }
+        .page-container { box-shadow: none; padding: 0; }
+        #printTable {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
+        #printTable th, #printTable td {
+            border: 1px solid #999;
+            padding: 6px 8px;
+            color: #000;
+            text-align: center;
+        }
+        #printTable th { background: #eee; }
+    }
+</style>
+</head>
+<body>
+<button type="button" id="themeToggle" class="theme-toggle">☀️ Светлая</button>
+
+<div class="page-container">
+    <div class="page-title">ОКУД 0504230</div>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th class="row-del-cell"></th>
+                <th>№</th>
+                <th>ФИО</th>
+                <th>Наименование</th>
+                <th>Кол-во</th>
+                <th>Ед. измерения</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <table id="printTable">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>ФИО</th>
+                <th>Наименование</th>
+                <th>Кол-во</th>
+                <th>Ед. измерения</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody id="printTableBody"></tbody>
+    </table>
+
+    <div class="add-row-wrap">
+        <button type="button" class="button" id="addRowBtn">Добавить строку</button>
+    </div>
+
+    <div class="toolbar">
+        <button type="button" class="button" id="backBtn">Назад</button>
+        <button type="button" class="button" id="exportBtn">Экспорт в файл</button>
+        <button type="button" class="button" id="importBtn">Импорт из файла</button>
+        <input type="file" id="importInput" accept="application/json,.json">
+        <button type="button" class="button btn-danger" id="clearBtn">Очистить</button>
+        <button type="button" class="button" id="printBtn">Печать</button>
+    </div>
+</div>
+
+<script>
+    // Единицы измерения по ОК 015-94 (МК 002-97) ОКЕИ.
+    const UNITS = [
+        { code: '796', name: 'Штука', abbr: 'шт' },
+        { code: '778', name: 'Упаковка', abbr: 'уп.' },
+        { code: '715', name: 'Пара (2 шт.)', abbr: 'пара' },
+        { code: '704', name: 'Набор', abbr: 'набор' }
+    ];
+    const DEFAULT_UNIT_CODE = '796';
+
+    const tableBody = document.getElementById('tableBody');
+
+    function buildUnitOptions(selectEl, selectedCode) {
+        selectEl.innerHTML = '';
+        UNITS.forEach(u => {
+            const opt = document.createElement('option');
+            opt.value = u.code;
+            opt.textContent = u.name;
+            if (u.code === selectedCode) opt.selected = true;
+            selectEl.appendChild(opt);
+        });
+    }
+
+    function checkQtyValidity(input) {
+        const val = input.value.trim();
+        if (val === '') {
+            input.classList.add('invalid');
+            return;
+        }
+        const num = Number(val);
+        if (isNaN(num) || !Number.isInteger(num)) {
+            input.classList.add('invalid');
+        } else {
+            input.classList.remove('invalid');
+        }
+    }
+
+    // Общая проверка: поле считается некорректным, если оно пустое
+    function checkRequiredField(input) {
+        if (input.value.trim() === '') {
+            input.classList.add('invalid');
+        } else {
+            input.classList.remove('invalid');
+        }
+    }
+
+    function renumberRows() {
+        const rows = tableBody.querySelectorAll('tr');
+        rows.forEach((row, i) => {
+            row.querySelector('.row-num').textContent = i + 1;
+        });
+    }
+
+    function addRow(data) {
+        data = data || {};
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="row-del-cell"><button type="button" class="row-del" title="Удалить строку">✖</button></td>
+            <td class="row-num"></td>
+            <td class="fio-cell"><input type="text" class="fio-input" placeholder="ФИО"></td>
+            <td class="name-cell"><input type="text" class="name-input" placeholder="Наименование"></td>
+            <td><input type="number" step="any" class="qty-input" placeholder="0"></td>
+            <td><select class="unit-input"></select></td>
+            <td><input type="number" step="0.01" class="price-input" placeholder="0.00"></td>
+        `;
+
+        const fioInput = tr.querySelector('.fio-input');
+        const nameInput = tr.querySelector('.name-input');
+        const priceInput = tr.querySelector('.price-input');
+        const qtyInput = tr.querySelector('.qty-input');
+
+        fioInput.value = data.fio || '';
+        nameInput.value = data.name || '';
+        qtyInput.value = (data.qty !== undefined && data.qty !== null) ? data.qty : '';
+        priceInput.value = (data.price !== undefined && data.price !== null) ? data.price : '';
+
+        const unitSelect = tr.querySelector('.unit-input');
+        buildUnitOptions(unitSelect, data.unitCode || DEFAULT_UNIT_CODE);
+
+        qtyInput.addEventListener('input', () => checkQtyValidity(qtyInput));
+        fioInput.addEventListener('input', () => checkRequiredField(fioInput));
+        nameInput.addEventListener('input', () => checkRequiredField(nameInput));
+        priceInput.addEventListener('input', () => checkRequiredField(priceInput));
+
+        checkQtyValidity(qtyInput);
+        checkRequiredField(fioInput);
+        checkRequiredField(nameInput);
+        checkRequiredField(priceInput);
+
+        tr.querySelector('.row-del').addEventListener('click', () => {
+            tr.remove();
+            renumberRows();
+        });
+
+        tableBody.appendChild(tr);
+        renumberRows();
+    }
+
+    document.getElementById('addRowBtn').addEventListener('click', () => addRow());
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+        if (tableBody.children.length === 0) return;
+        if (confirm('Удалить все строки таблицы?')) {
+            tableBody.innerHTML = '';
+        }
+    });
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+        window.location.href = 'menu.html';
+    });
+
+    // ===== Экспорт =====
+    function buildExportFileName() {
+        const now = new Date();
+        const dd = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const yyyy = now.getFullYear();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        return `OKUD_0504230_${dd}_${month}_${yyyy}_${hh}_${mm}.json`;
+    }
+
+    function exportToFile() {
+        const rows = [];
+        tableBody.querySelectorAll('tr').forEach(tr => {
+            rows.push({
+                fio: tr.querySelector('.fio-input').value,
+                name: tr.querySelector('.name-input').value,
+                qty: tr.querySelector('.qty-input').value,
+                unitCode: tr.querySelector('.unit-input').value,
+                price: tr.querySelector('.price-input').value
+            });
+        });
+
+        const payload = { form: 'ОКУД 0504230', exportedAt: new Date().toISOString(), rows: rows };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = buildExportFileName();
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    document.getElementById('exportBtn').addEventListener('click', exportToFile);
+    function buildPrintTable() {
+        const printBody = document.getElementById('printTableBody');
+        printBody.innerHTML = '';
+
+        tableBody.querySelectorAll('tr').forEach((tr, i) => {
+            const unitCode = tr.querySelector('.unit-input').value;
+            const unit = UNITS.find(u => u.code === unitCode);
+
+            const row = document.createElement('tr');
+            [
+                i + 1,
+                tr.querySelector('.fio-input').value,
+                tr.querySelector('.name-input').value,
+                tr.querySelector('.qty-input').value,
+                unit ? unit.name : '',
+                tr.querySelector('.price-input').value
+            ].forEach(val => {
+                const td = document.createElement('td');
+                td.textContent = val;
+                row.appendChild(td);
+            });
+            printBody.appendChild(row);
+        });
+    }
+
+    document.getElementById('printBtn').addEventListener('click', () => {
+        buildPrintTable();
+        window.print();
+    });
+
+    // ===== Импорт =====
+    const importInput = document.getElementById('importInput');
+    document.getElementById('importBtn').addEventListener('click', () => importInput.click());
+
+    importInput.addEventListener('change', () => {
+        const file = importInput.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const data = JSON.parse(reader.result);
+                const rows = Array.isArray(data) ? data : (data.rows || []);
+                if (!Array.isArray(rows)) throw new Error('bad format');
+
+                tableBody.innerHTML = '';
+                rows.forEach(r => addRow(r));
+            } catch (e) {
+                alert('Не удалось прочитать файл. Ожидается файл, экспортированный с этой страницы (.json).');
+            } finally {
+                importInput.value = '';
+            }
+        };
+        reader.readAsText(file, 'utf-8');
+    });
+
+    // Пустая таблица при старте — одна строка для удобства
+    addRow();
+
+    // ===== Переключение темы =====
+    const themeLink = document.getElementById('themeStylesheet');
+    const themeToggle = document.getElementById('themeToggle');
+
+    function applyTheme(theme) {
+        themeLink.href = theme === 'light' ? 'style_light.css' : 'style_dark.css';
+        themeToggle.textContent = theme === 'light' ? '🌙 Тёмная' : '☀️ Светлая';
+        try { localStorage.setItem('theme', theme); } catch (e) {}
+    }
+
+    let currentTheme = 'dark';
+    try { currentTheme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+    applyTheme(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(currentTheme);
+    });
+</script>
+</body>
+</html>
