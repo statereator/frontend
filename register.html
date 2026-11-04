@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_dark.css" id="themeStylesheet">
+    <script>
+        // Apply saved theme before the page renders (prevents a flash of the wrong theme)
+        (function () {
+            var theme = 'dark';
+            try { theme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+            if (theme === 'light') {
+                document.getElementById('themeStylesheet').href = 'style_light.css';
+            }
+        })();
+    </script>
 </head>
 <body>
+    <button type="button" id="themeToggle" class="theme-toggle">☀️ Светлая</button>
+
     <div class="form-container">
         <div class="logo">Регистрация</div>
 
@@ -99,11 +111,11 @@
         function checkPasswordsMatch() {
             if (confirmInput.value.trim() === passwordInput.value.trim() && passwordInput.value.trim() !== '') {
                 confirmError.textContent = 'Пароли совпадают ✅';
-                confirmError.style.color = '#a0f0a0';
+                confirmError.style.color = 'var(--success-text)';
                 return true;
             } else {
                 confirmError.textContent = 'Пароли не совпадают';
-                confirmError.style.color = '#ff6b6b';
+                confirmError.style.color = 'var(--error)';
                 return false;
             }
         }
@@ -136,6 +148,25 @@
         // Кнопка «Войти» — переход на авторизацию
         document.querySelector('.buttons-group .button:last-child').addEventListener('click', () => {
             window.location.href = 'auth.html';
+        });
+
+        // ===== Theme switch =====
+        const themeLink = document.getElementById('themeStylesheet');
+        const themeToggle = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            themeLink.href = theme === 'light' ? 'style_light.css' : 'style_dark.css';
+            themeToggle.textContent = theme === 'light' ? '🌙 Тёмная' : '☀️ Светлая';
+            try { localStorage.setItem('theme', theme); } catch (e) {}
+        }
+
+        let currentTheme = 'dark';
+        try { currentTheme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+        applyTheme(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
         });
     </script>
 </body>

@@ -1,0 +1,153 @@
+:root {
+    --bg: #eef0f5;
+    --text: #1f2330;
+    --input-bg: #ffffff;
+    --button: #29a93e;
+    --button-hover: #1e6b2e;
+    --input-border: #d3d6e0;
+    --toggle-border: #d3d6e0;
+    --error: #d93030;
+    --success-bg: #e3f5e3;
+    --success-text: #1e6b2e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 420px;
+    background: var(--input-bg);
+    padding: 50px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(31, 35, 48, 0.12);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 800;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+    letter-spacing: -1px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+}
+
+input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 16px;
+    text-align: center;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+    font-weight: 400;
+    transition: border 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--button);
+}
+
+.error {
+    color: var(--error);
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+    font-weight: 400;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+}
+
+.error.show {
+    display: block;
+}
+
+.buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;          /* ← небольшой отступ между кнопками */
+    width: 100%;
+}
+
+.button {
+    width: 100%;
+    padding: 14px;
+    background: var(--button);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+}
+
+.button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+}
+
+.success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: none;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 400;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 16px;
+    background: var(--input-bg);
+    color: var(--text);
+    border: 2px solid var(--toggle-border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: "Relovution Gothic Family RUS", sans-serif;
+}
+
+.theme-toggle:hover {
+    border-color: var(--button);
+}
